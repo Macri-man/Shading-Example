@@ -5,33 +5,6 @@
 #include <vector>
 #include <cstring>
 
-void printLog(Glenum type, GLuint obj){
-	GLuint logSize;
-
-	if(glIsShader(obj))
-		glGetShaderiv(obj,GL_INFO_LOG_LENGTH,&logSize);
-	else
-		glGetProgramiv(obj,GL_INFO_LOG_LENGTH,&logSize);
-	
-	char *infoLog = new char[logSize+1];
-
-	if(glIsShader(obj)){
-		glGetShaderInfoLog(obj,maxLength,&infologLength,infoLog);
-		const char *shadeType=NULL;
-		switch(type){
-		  case GL_VERTEX_SHADER: shadeInfo= "vertex";break;
-		  case GL_GEOMETRY_SHADER_EXT: shadeInfo = "geometric";break;
-      	  case GL_FRAGMENT_SHADER: shadeInfo = "fragment";break;
-      	}
-      	fprintf(stderr,"\nCompile failure in %u shader: %s\n Error message:\n%s\n",type,shadeInfo,infoLog)
-	}else{
-		glGetProgramInfoLog(obj,maxLength,&infologLength,infoLog);
-		fprintf(stderr,"\nShader linking failed: %s\n",infoLog);
-	}
-	delete[] infoLog;
-	delete[] shadeType;
-}
-
 #ifndef __scanDirectory
 #define __scanDirectory
     void scanDirectory(vector<string> &files, string dirr){
@@ -74,6 +47,8 @@ void setupShaders(){
 	vector<string> files;
 	scanDirectory(files,"Shaders");
 	ShaderInfo shaders[files.size()];
+	ProgInfo programs=new ProgInfo[0];
+	
 
 	for(int i=0;i<files.size();i++){
 		int temp=files[i].find(".");
@@ -88,26 +63,25 @@ void setupShaders(){
 		shaders[i].filename=file.at(i);
 	}
 
-	initShaders(shaders);
+	programs[0].progNum=initShaders(shaders);
 }
 
-void setupUniforms(){
-
+void setupUniforms(Glenum prog){
+		
+		/*
     int i=0;
-
     glGetIntegerv(GL_CURRENT_PROGRAM,&i);
+    */
     
     glm::mat4 temp;
     //temp=glm::perspective(gameOptions.fov, (gameOptions.RESOLUTION_X)/((float)gameOptions.RESOLUTION_Y), 2.0f, 5000.0f);
     temp=glm::ortho(-gameOptions.RESOLUTION_X/20.0f,gameOptions.RESOLUTION_X/20.0f,gameOptions.RESOLUTION_Y/-20.0f,gameOptions.RESOLUTION_Y/20.0f, 2.0f, 5000.0f);
-    int tempLoc=glGetUniformLocation(shaders["main"], "projectionMatrix");
+    int tempLoc=glGetUniformLocation(prog, "projectionMatrix");
     glUniformMatrix4fv(tempLoc,1, GL_FALSE,&temp[0][0]);
 
     temp= glm::mat4();
-    tempLoc=glGetUniformLocation(shaders["main"], "modelMatrix");
+    tempLoc=glGetUniformLocation(prog, "modelMatrix");
     glUniformMatrix4fv(tempLoc,1, GL_FALSE,&temp[0][0]);
-
-
 
     //temp=glm::translate(temp,glm::vec3(0,10,-30));
     //temp=glm::rotate(temp,-50.0f,glm::vec3(1,0,0));
@@ -116,16 +90,12 @@ void setupUniforms(){
     //temp=glm::rotate(temp,-50.0f,glm::vec3(1,0,0));
     //temp=glm::rotate(temp,40.0f,glm::vec3(0,0,1));
 
-    tempLoc=glGetUniformLocation(shaders["main"], "viewMatrix");
+    tempLoc=glGetUniformLocation(prog, "viewMatrix");
     glUniformMatrix4fv(tempLoc,1, GL_FALSE,&temp[0][0]);
 
-    tempLoc=tempLoc=glGetUniformLocation(shaders["main"], "Sampler");
+    tempLoc=tempLoc=glGetUniformLocation(prog, "Sampler");
     glUniform1i(tempLoc, 0);
-
-
-
-    glUseProgram(0);
-
+    glUseProgram(prog);
 }
 
 #endif // SHADERHELP_H_INCLUDED
