@@ -1,0 +1,21 @@
+#version 130
+
+uniform mat4 projectionMatrix;
+uniform mat4 modelMatrix;
+uniform mat4 viewMatrix;
+  
+in vec3 in_Position;
+in vec2 in_Tex;
+
+out vec2 pass_Tex;
+
+void main(void)
+{
+vec4 temp;
+vec4 temp2;
+temp = viewMatrix * vec4(in_Position, 1.0); 
+temp2 = modelMatrix * temp;
+gl_Position=projectionMatrix * temp2;
+
+pass_Tex=in_Tex;
+}

@@ -1,0 +1,24 @@
+Loaded: Textures/wizard3.bmp
+Loaded: Textures/wizard2.bmp
+Loaded: Textures/wizard.bmp
+Loaded: Textures/TextW.bmp
+Loaded: Textures/TextB.bmp
+Loaded: Textures/terrain.bmp
+Loaded: Textures/dne.bmp
+Loaded: Textures/cb.bmp
+0:1(10): error: GLSL 1.40 is not supported. Supported versions are: 1.10, 1.20, 1.30, and 1.00 ES
+
+
+0:1(10): error: GLSL 1.40 is not supported. Supported versions are: 1.10, 1.20, 1.30, and 1.00 ES
+
+
+error: linking with uncompiled shadererror: linking with uncompiled shader
+0:1(10): error: GLSL 3.30 is not supported. Supported versions are: 1.10, 1.20, 1.30, and 1.00 ES
+
+
+0:1(10): error: GLSL 3.30 is not supported. Supported versions are: 1.10, 1.20, 1.30, and 1.00 ES
+
+
+loaded program main
+loaded program text
+Exited cleanly

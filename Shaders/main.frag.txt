@@ -1,0 +1,29 @@
+#version 130 
+
+in vec2 pass_Tex;
+
+out vec4 out_Color;
+
+
+uniform sampler2D Sampler;
+uniform int time;
+
+void main(void)
+{
+
+out_Color=vec4(1,1,1,1);
+return;
+
+vec4 temp;
+temp=texture(Sampler,pass_Tex);
+
+if(temp.r==1&&temp.g==0&&temp.b==1)
+out_Color=vec4(0,0,0,0);
+else if(temp.r==1&&temp.g==0&&temp.b==(254/255.0)){
+temp.a=1-(mod(time,255)/255.0);
+out_Color=vec4((.5+pass_Tex.x)*sin(time/6.0),pass_Tex.y*cos(time/12.0),(pass_Tex.x*pass_Tex.y-pass_Tex.x)*sin(time/7.0),1);
+}
+else
+out_Color=temp;
+
+}
