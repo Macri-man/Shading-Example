@@ -146,7 +146,7 @@ if(s=="esc") return SDLK_ESCAPE;
 //if(s=="pb") return SDLK_BREAK;
 
 return SDLK_F15;
-    }
+}
 
 void processINILine(string s){
 
@@ -263,14 +263,13 @@ void loadGameOptions(){
 
     ifstream inFile("settings.ini");
     std::string temp;
+    
     while(inFile){
-
     getline(inFile,temp);
     if(temp[0]!='#')
     processINILine(temp);
     }
-
-    }
+}
 
 
 

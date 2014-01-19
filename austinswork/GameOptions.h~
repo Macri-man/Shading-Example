@@ -38,7 +38,7 @@ struct Gamecontants{
     } gameOptions;
 
 
-/*
+
 SDL_Keycode stringToKey(string s){
 
 if(s=="a") return SDLK_a;
@@ -146,100 +146,132 @@ if(s=="esc") return SDLK_ESCAPE;
 //if(s=="pb") return SDLK_BREAK;
 
 return SDLK_F15;
-    }
-*/
+}
 
 void processINILine(string s){
 
 
-    int input=s.find('=');
-    string mod=s.substr(0,input);
-    string key=s.substr(input);
+    int eq=s.find('=',0);
+    string mod=s.substr(0,eq);
+    string mew=s.substr(eq+1);
 
 
     if(mod=="XRES")
-    gameOptions.RESOLUTION_X=atoi(key.c_str());
+    gameOptions.RESOLUTION_X=atoi(mew.c_str());
     if(mod=="YRES")
-    gameOptions.RESOLUTION_Y=atoi(key.c_str());
+    gameOptions.RESOLUTION_Y=atoi(mew.c_str());
 
     if(mod=="PORT")
-    gameOptions.port=atoi(key.c_str());
+    gameOptions.port=atoi(mew.c_str());
 
     if(mod=="CLOSEDIST")
-    gameOptions.closeDist=atoi(key.c_str());
+    gameOptions.closeDist=atoi(mew.c_str());
 
     if(mod=="FOV")
-    gameOptions.fov=atoi(key.c_str());
+    gameOptions.fov=atof(mew.c_str());
     //if(mod=="GUISIZE")
     //gameOptions.dispdist=atof(mew.c_str());
 
     if(mod=="SENSE")
-    gameOptions.sensitivity=atof(key.c_str());
+    gameOptions.sensitivity=atof(mew.c_str());
 
     if(mod=="FULLSCREEN")
-    gameOptions.fullScreen=key=="true";
+    gameOptions.fullScreen=mew=="true";
     if(mod=="CLOSEUP")
-    gameOptions.closeUp=key=="true";
+    gameOptions.closeUp=mew=="true";
     if(mod=="VIEW")
-    gameOptions.view=key=="true";
+    gameOptions.view=mew=="true";
 
     if(mod=="INVERT")
-    gameOptions.invert=(key=="true"?-1:1);
+    gameOptions.invert=(mew=="true"?-1:1);
 
     if(mod == "FORWARD")
-    gameOptions.move[0]=SDL_GetKeyFromName(key.cstr());
+    gameOptions.move[0]=stringToKey(mew);
     if(mod == "LEFT")
-    gameOptions.move[1]=SDL_GetKeyFromName(key.cstr());
+    gameOptions.move[1]=stringToKey(mew);
     if(mod == "BACK")
-    gameOptions.move[2]=SDL_GetKeyFromName(key.cstr());
+    gameOptions.move[2]=stringToKey(mew);
     if(mod == "RIGHT")
-    gameOptions.move[3]=SDL_GetKeyFromName(key.cstr());
+    gameOptions.move[3]=stringToKey(mew);
     if(mod == "JUMP")
-    gameOptions.jump=SDL_GetKeyFromName(key.cstr());
+    gameOptions.jump=stringToKey(mew);
     if(mod == "DOWN")
-    gameOptions.down=SDL_GetKeyFromName(key.cstr());
+    gameOptions.down=stringToKey(mew);
 
     if(mod == "TOGGLEVIEW")
-    gameOptions.toggleView=SDL_GetKeyFromName(key.cstr());
+    gameOptions.toggleView=stringToKey(mew);
 
-    if(mod == "A0")
-    gameOptions.alt[0]=SDL_GetKeyFromName(key.cstr());
-    if(mod == "A1")
-    gameOptions.alt[1]=SDL_GetKeyFromName(key.cstr());
-    if(mod == "A2")
-    gameOptions.alt[2]=SDL_GetKeyFromName(key.cstr());
-    if(mod == "A3")
-    gameOptions.alt[3]=SDL_GetKeyFromName(key.cstr());
-    if(mod == "A4")
-    gameOptions.alt[4]=SDL_GetKeyFromName(key.cstr());
-    if(mod == "A5")
-    gameOptions.alt[5]=SDL_GetKeyFromName(key.cstr());
-    if(mod == "A6")
-    gameOptions.alt[6]=SDL_GetKeyFromName(key.cstr());
-    if(mod == "A7")
-    gameOptions.alt[7]=SDL_GetKeyFromName(key.cstr());
+    if(mod == "AFORWARD")
+    gameOptions.alt[0]=stringToKey(mew);
+    if(mod == "ALEFT")
+    gameOptions.alt[1]=stringToKey(mew);
+    if(mod == "ABACK")
+    gameOptions.alt[2]=stringToKey(mew);
+    if(mod == "ARIGHT")
+    gameOptions.alt[3]=stringToKey(mew);
+    if(mod == "AUP")
+    gameOptions.alt[4]=stringToKey(mew);
+    if(mod == "ADOWN")
+    gameOptions.alt[5]=stringToKey(mew);
     if(mod == "AGRAV")
-    gameOptions.aGrav=SDL_GetKeyFromName(key.cstr());
+    gameOptions.aGrav=stringToKey(mew);
+
+
     if(mod == "IP")
-    gameOptions.host=key;
+    gameOptions.host=mew;
     if(mod == "NAME")
-    gameOptions.name=key;
-}
+    gameOptions.name=mew;
+
+    }
 
 void loadGameOptions(){
 
+    gameOptions.move[0]=SDLK_w;
+    gameOptions.move[1]=SDLK_a;
+    gameOptions.move[2]=SDLK_s;
+    gameOptions.move[3]=SDLK_d;
+    gameOptions.jump=SDLK_SPACE;
+    gameOptions.down=SDLK_z;
+
+    gameOptions.alt[0]=SDLK_i;
+    gameOptions.alt[1]=SDLK_l;
+    gameOptions.alt[2]=SDLK_k;
+    gameOptions.alt[3]=SDLK_j;
+    gameOptions.alt[4]=SDLK_u;
+    gameOptions.alt[5]=SDLK_o;
+    gameOptions.alt[6]=SDLK_m;
+    gameOptions.alt[7]=SDLK_n;
+    gameOptions.aGrav=SDLK_p;
+
+
+    gameOptions.toggleView=SDLK_F3;
+    gameOptions.port=6112;
+    gameOptions.host="127.0.0.1";
+    gameOptions.name="localplayer";
+    gameOptions.fov=70;//57
     gameOptions.dispdist=20;
     gameOptions.vol=100;
+    gameOptions.invert=1;
+    gameOptions.RESOLUTION_X=1280;
+    gameOptions.RESOLUTION_Y=800;
+    gameOptions.fullScreen=false;
+    gameOptions.view=false;
+    gameOptions.sensitivity=.05;
     gameOptions.projectionOffset=.7;
+    gameOptions.closeUp=true;
     gameOptions.closeDist=250;
 
     ifstream inFile("settings.ini");
-    string temp;
+    std::string temp;
     while(inFile){
+
     getline(inFile,temp);
+    if(temp[0]!='#')
     processINILine(temp);
     }
-}
+
+    }
+
 
 
 

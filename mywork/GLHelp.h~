@@ -53,6 +53,7 @@ void setupGL(){
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);*/
     //glTexImage2D( GL_TEXTURE_2D, 0, 4, image->w, image->h, 0,GL_RGB, GL_UNSIGNED_BYTE, image->pixels );
 
+
     glLoadIdentity();
 
 
@@ -60,6 +61,8 @@ void setupGL(){
 
 void shutdownGL(){
     cleanupShaders();
+
+
 }
 
 
@@ -68,7 +71,19 @@ void render(SDL_Window * win){
     glLoadIdentity();
     glUseProgram(0);
 
+    /*glBegin(GL_QUADS);
+    glColor3f(0,0,1);
+    glVertex3f(10,10,-50);
+    glVertex3f(10,-10,-50);
+    glVertex3f(-10,-10,-50);
+    glVertex3f(-10,10,-50);
+    glEnd();*/
+
+	printf("2:%s\n",gluErrorString(glGetError()));
     theWorld->render();
+
+
+
 
     SDL_GL_SwapWindow(win);
 }
